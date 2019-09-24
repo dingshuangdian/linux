@@ -59,3 +59,56 @@
 - r：查看文件内容
 - w： 在文件里写内容
 - x：执行该文件(文件不是普通文件，是程序或脚本)
+
+##### 三、chmod权限分配
+1.``增加权限--删除权限``
+- chmod u+x my.sh &emsp;&emsp;&emsp;//给当前用户分配执行my.sh的权限
+- chmod o+r,o+w file.txt &emsp;&emsp;&emsp;//给其他用户分配对 file.txt 的读写权限
+- chmod o+r,o+w,o+x mnt &emsp;&emsp;&emsp;//给所有其他用户分配对mnt目录的进入、读取、写入权限
+- chmod -R o+r,o+w,o+x mnt &emsp;&emsp;&emsp;//修改目录下的所有文件的权限为可读、可修改、可执行
+- chmod 775 file &emsp;&emsp;&emsp;//775 表示-rwxr-xr-x
+- chmod -R 777 wwwroot/  &emsp;&emsp;&emsp;//修改目录下的所有文件的权限为可读、可修改、可执行
+
+--  **需求**--
+
+(1)
+ - 让其他人对 mnt目录没有任何权限
+
+       chmod o-r,o-w,o-x mnt
+
+ - 所有人对test.sh文件具有x的权限
+
+        chmod a+x test.sh
+ - 让所有用户对test.sh都没有x权限
+
+         chmod a-x test.sh
+
+- 让所有用户对mnt以及mnt里面的所有文件和文件夹都有w权限
+
+        chmod o-r,o-w,o-x root
+        chmod -R a+w mnt/  //R表示递归
+
+(2)**用户权限管理acl**
+- 让zhangsan对opt目录具有rx权限，让 lisi对opt目录具有rwx的权限
+
+  **ps：-m  修改**
+
+      [root@localhost /]# setfacl -m u:zhangsan:rx opt/
+      [root@localhost /]# setfacl -m u:lisi:rwx opt/
+
+- 查看opt拥有的 acl权限
+
+      getfacl opt
+
+- 设置opt的acl权限
+
+      setfacl -m u:zhangsan:rwx opt
+- 删除 opt的user1拥有的acl权限
+
+      setfacl -x u:zhangsan opt  //-x 删除      
+
+- 删除opt上所设置过的所有acl权限
+
+      setfacl -b opt/   
+
+(3)**用户权限管理visudo**           
