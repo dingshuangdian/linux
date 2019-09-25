@@ -53,5 +53,17 @@
 
 7.``yum本地安装apache RPM包``
 - yum localinstall httpd-2.4.6-80.el7.centos.x86_64.rpm
+8.``yum安装Nginx``
 
-##### 三、yum仓库设置
+（1）、源安装
+- sudo rpm -ivh http://nginx.org/packages/centos/7/noarch/RPMS/nginx-release-centos-7-0.el7.ngx.noarch.rpm
+
+(2)、查看nginx源是否配置成功
+- yum search nginx
+- yum info nginx
+- yum install -y nginx
+
+(3)、启动nginx并设置开机自动运行
+- systemctl start nginx.service
+- systemctl enable nginx.service
+##### 三、yum仓库设置(了解)
